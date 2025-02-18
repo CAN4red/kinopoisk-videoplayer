@@ -9,10 +9,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.videoplayerassignment.presentation.film_list.FilmListViewModel
 import com.example.videoplayerassignment.ui.theme.VideoplayerAssignmentTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +27,6 @@ class MainActivity : ComponentActivity() {
             VideoplayerAssignmentTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
-                        name = "Android",
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -31,17 +36,22 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
+fun Greeting(
+    modifier: Modifier = Modifier,
+    viewModel: FilmListViewModel = hiltViewModel()
+) {
+    val state by viewModel.state.collectAsState()
     Text(
-        text = "Hello $name!",
+        text = "Hello ${state.filmListInfo.size}!",
         modifier = modifier
     )
+
 }
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     VideoplayerAssignmentTheme {
-        Greeting("Android")
+        Greeting()
     }
 }
