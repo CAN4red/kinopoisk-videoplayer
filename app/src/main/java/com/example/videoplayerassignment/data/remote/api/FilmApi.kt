@@ -5,7 +5,7 @@ import com.example.videoplayerassignment.data.remote.dto.FilmsListInfo
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface FilmsApi {
+interface FilmApi {
 
     @GET("/api/v2.2/films/collections?type=$COLLECTION_TYPE&page=1")
     suspend fun getFilmsListInfo(): FilmsListInfo

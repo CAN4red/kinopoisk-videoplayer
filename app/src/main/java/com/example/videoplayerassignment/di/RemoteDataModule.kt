@@ -1,7 +1,9 @@
 package com.example.videoplayerassignment.di
 
 import com.example.videoplayerassignment.common.Constants
-import com.example.videoplayerassignment.data.remote.api.FilmsApi
+import com.example.videoplayerassignment.data.remote.api.FilmApi
+import com.example.videoplayerassignment.data.repository.FilmRepositoryImpl
+import com.example.videoplayerassignment.domain.repository.FilmRepository
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -18,14 +20,18 @@ object RemoteDataModule {
 
     @Provides
     @Singleton
-    fun provideFilmsApi(): FilmsApi {
+    fun provideFilmsApi(): FilmApi {
         val json = Json { ignoreUnknownKeys = true }
         return Retrofit.Builder()
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
             .baseUrl(Constants.BASE_URL)
             .build()
-            .create(FilmsApi::class.java)
+            .create(FilmApi::class.java)
     }
 
-
+    @Provides
+    @Singleton
+    fun provideFilmRepository(api: FilmApi): FilmRepository {
+        return FilmRepositoryImpl(api)
+    }
 }
