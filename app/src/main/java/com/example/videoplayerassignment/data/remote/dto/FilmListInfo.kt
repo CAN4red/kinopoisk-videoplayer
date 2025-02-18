@@ -4,7 +4,8 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class FilmsList(
-    @SerialName("items")
-    val films: List<Film>,
+data class FilmListInfo(
+    @SerialName("total")
+    val size: Int = 0,
+    val totalPages: Int = 0,
 )
