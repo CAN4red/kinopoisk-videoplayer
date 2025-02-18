@@ -1,4 +1,4 @@
-package com.example.videoplayerassignment.data.remote
+package com.example.videoplayerassignment.data.remote.api
 
 import com.example.videoplayerassignment.data.remote.dto.FilmsList
 import com.example.videoplayerassignment.data.remote.dto.FilmsListInfo
