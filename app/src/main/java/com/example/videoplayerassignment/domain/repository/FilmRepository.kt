@@ -1,11 +1,13 @@
 package com.example.videoplayerassignment.domain.repository
 
+import com.example.videoplayerassignment.common.Resource
 import com.example.videoplayerassignment.data.remote.dto.Film
-import com.example.videoplayerassignment.data.remote.dto.FilmsListInfo
+import com.example.videoplayerassignment.data.remote.dto.FilmListInfo
+import kotlinx.coroutines.flow.Flow
 
 interface FilmRepository {
 
-    suspend fun getFilmsListInfo(): FilmsListInfo
+    fun getFilmsListInfo(): Flow<Resource<FilmListInfo>>
 
-    suspend fun getFilms(page: Int): List<Film>
+    fun getFilmListByPage(page: Int): Flow<Resource<List<Film>>>
 }
