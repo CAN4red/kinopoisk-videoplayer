@@ -8,11 +8,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.example.videoplayerassignment.data.remote.dto.Film
+import com.example.videoplayerassignment.domain.model.FilmItem
 
 @Composable
 fun FilmItem(
-    film: Film,
+    film: FilmItem,
     onClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {

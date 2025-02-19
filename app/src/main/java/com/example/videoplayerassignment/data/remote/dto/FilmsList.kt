@@ -6,5 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class FilmsList(
     @SerialName("items")
-    val films: List<Film>,
+    val films: List<FilmDto>,
 )
+
+fun FilmsList.toFilmItemList() = films.map { it.toFilmItem() }

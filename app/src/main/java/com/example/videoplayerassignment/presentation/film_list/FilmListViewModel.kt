@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.videoplayerassignment.common.Resource
-import com.example.videoplayerassignment.data.remote.dto.Film
+import com.example.videoplayerassignment.domain.model.FilmItem
 import com.example.videoplayerassignment.domain.use_case.GetFilmListInfoUseCase
 import com.example.videoplayerassignment.domain.use_case.GetNewFilmPagesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -65,7 +65,7 @@ class FilmListViewModel @Inject constructor(
         }
     }
 
-    private fun updateFilmState(resource: Resource<List<Film>>) {
+    private fun updateFilmState(resource: Resource<List<FilmItem>>) {
         Log.i("Success Update", if (resource is Resource.Success) resource.data.size.toString() else "Not Success")
         _state.update { current ->
             when (resource) {

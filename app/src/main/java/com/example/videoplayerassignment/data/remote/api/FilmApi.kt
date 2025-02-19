@@ -1,6 +1,6 @@
 package com.example.videoplayerassignment.data.remote.api
 
-import com.example.videoplayerassignment.data.remote.dto.FilmListInfo
+import com.example.videoplayerassignment.data.remote.dto.FilmListInfoDto
 import com.example.videoplayerassignment.data.remote.dto.FilmsList
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -8,7 +8,7 @@ import retrofit2.http.Query
 interface FilmApi {
 
     @GET("api/v2.2/films/collections?type=$COLLECTION_TYPE&page=1")
-    suspend fun getFilmsListInfo(): FilmListInfo
+    suspend fun getFilmsListInfo(): FilmListInfoDto
 
     @GET("api/v2.2/films/collections")
     suspend fun getFilmListByPage(

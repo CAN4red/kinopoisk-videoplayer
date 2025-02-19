@@ -10,12 +10,12 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import com.example.videoplayerassignment.data.remote.dto.Film
+import com.example.videoplayerassignment.domain.model.FilmItem
 import com.example.videoplayerassignment.presentation.film_list.components.film_item.FilmItem
 
 @Composable
 fun FilmList(
-    films: List<Film>,
+    films: List<FilmItem>,
     onFilmItemClick: (Int) -> Unit,
     loadMoreFilms: () -> Unit,
     modifier: Modifier = Modifier,

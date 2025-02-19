@@ -1,10 +1,11 @@
 package com.example.videoplayerassignment.presentation.film_list
 
-import com.example.videoplayerassignment.data.remote.dto.Film
-import com.example.videoplayerassignment.data.remote.dto.FilmListInfo
+
+import com.example.videoplayerassignment.domain.model.FilmItem
+import com.example.videoplayerassignment.domain.model.FilmListInfo
 
 data class FilmListState(
-    val films: List<Film> = emptyList(),
+    val films: List<FilmItem> = emptyList(),
     val filmListInfo: FilmListInfo = FilmListInfo(),
     val isLoading: Boolean = false,
     val error: String? = null

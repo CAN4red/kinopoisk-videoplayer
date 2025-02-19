@@ -12,11 +12,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.videoplayerassignment.data.remote.dto.Film
+import com.example.videoplayerassignment.domain.model.FilmItem
 
 @Composable
 fun FilmItemContent(
-    film: Film,
+    film: FilmItem,
     modifier: Modifier = Modifier,
 ) {
     val cardAspectRatio = 3f
@@ -29,8 +29,8 @@ fun FilmItemContent(
     ) {
         FilmContentRow(
             imageUrl = film.posterUrlPreview,
-            title = film.nameRu,
-            year = film.year?.toString() ?: ""
+            title = film.name,
+            year = film.year
         )
     }
 }
@@ -61,13 +61,13 @@ private fun FilmContentRow(
 @Preview
 @Composable
 fun FilmListItemContentPreview() {
-    val film = Film(
+    val film = FilmItem(
         id = 1,
-        nameRu = "Мстители",
-        nameEn = "The Avengers",
-        year = 2012,
-        posterUrl = "http://kinopoiskapiunofficial.tech/images/posters/kp/263531.jpg",
-        posterUrlPreview = "https://kinopoiskapiunofficial.tech/images/posters/kp_small/301.jpg"
+        name = "Avengers",
+        year = "2012",
+        countries = listOf("USA", "Russia"),
+        genres = listOf("Superheroes"),
+        posterUrlPreview = "https://kinopoiskapiunofficial.tech/images/posters/kp_small/301.jpg",
     )
     FilmItemContent(film = film)
 }
