@@ -9,7 +9,6 @@ import com.example.videoplayerassignment.domain.repository.FilmRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class GetNewFilmPagesUseCase @Inject constructor(
