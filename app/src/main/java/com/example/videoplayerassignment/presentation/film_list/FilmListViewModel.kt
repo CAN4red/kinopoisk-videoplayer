@@ -1,5 +1,6 @@
 package com.example.videoplayerassignment.presentation.film_list
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.videoplayerassignment.common.Resource
@@ -28,6 +29,7 @@ class FilmListViewModel @Inject constructor(
     }
 
     fun loadMoreFilms() {
+        Log.i("State Value", state.value.toString())
         if (state.value.isLoading) return
 
         viewModelScope.launch {
@@ -35,6 +37,7 @@ class FilmListViewModel @Inject constructor(
                 currentFilms = _state.value.films,
                 filmListInfo = _state.value.filmListInfo
             ).collect { resource ->
+                Log.i("Collect Resource", if (resource is Resource.Success) resource.data.size.toString() else "Not Success")
                 updateFilmState(resource)
             }
         }
@@ -43,11 +46,18 @@ class FilmListViewModel @Inject constructor(
     private fun loadInitialData() {
         viewModelScope.launch {
             getFilmListInfoUseCase().collect { resource ->
+                Log.i("Load Init Data Result", resource.toString())
                 when (resource) {
                     is Resource.Success -> {
-                        _state.update { it.copy(filmListInfo = resource.data) }
+                        _state.update {
+                            it.copy(
+                                filmListInfo = resource.data,
+                                isLoading = false,
+                            )
+                        }
                         loadMoreFilms()
                     }
+
                     is Resource.Error -> updateErrorState(resource.message)
                     is Resource.Loading -> _state.update { it.copy(isLoading = true) }
                 }
@@ -56,6 +66,7 @@ class FilmListViewModel @Inject constructor(
     }
 
     private fun updateFilmState(resource: Resource<List<Film>>) {
+        Log.i("Success Update", if (resource is Resource.Success) resource.data.size.toString() else "Not Success")
         _state.update { current ->
             when (resource) {
                 is Resource.Success -> current.copy(
@@ -63,11 +74,14 @@ class FilmListViewModel @Inject constructor(
                     isLoading = false,
                     error = ""
                 )
+
+
                 is Resource.Error -> current.copy(
                     isLoading = false,
                     error = resource.message,
                     films = resource.data ?: current.films
                 )
+
                 is Resource.Loading -> current.copy(
                     films = resource.data ?: current.films
                 )

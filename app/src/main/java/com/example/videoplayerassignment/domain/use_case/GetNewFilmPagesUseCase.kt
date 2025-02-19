@@ -1,5 +1,6 @@
 package com.example.videoplayerassignment.domain.use_case
 
+import android.util.Log
 import com.example.videoplayerassignment.common.Constants
 import com.example.videoplayerassignment.common.Resource
 import com.example.videoplayerassignment.data.remote.dto.Film
@@ -7,6 +8,7 @@ import com.example.videoplayerassignment.data.remote.dto.FilmListInfo
 import com.example.videoplayerassignment.domain.repository.FilmRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
@@ -27,7 +29,7 @@ class GetNewFilmPagesUseCase @Inject constructor(
             }
         }
 
-        return repository.getFilmListByPage(nextPage).onEach { result ->
+        return repository.getFilmListByPage(nextPage).map { result ->
             when (result) {
                 is Resource.Loading -> {
                     Resource.Loading<List<Film>>(data = currentFilms)
@@ -35,6 +37,7 @@ class GetNewFilmPagesUseCase @Inject constructor(
 
                 is Resource.Success -> {
                     val combinedList = currentFilms + result.data
+                    Log.i("Combined List", combinedList.size.toString())
                     Resource.Success<List<Film>>(combinedList)
                 }
 

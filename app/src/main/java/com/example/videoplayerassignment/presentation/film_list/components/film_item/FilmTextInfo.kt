@@ -41,7 +41,7 @@ private fun FilmTitleText(text: String) {
 @Composable
 private fun FilmSubtitleText(year: String) {
     Text(
-        text = year.toString(),
+        text = year,
         style = MaterialTheme.typography.titleMedium,
         fontWeight = FontWeight.SemiBold,
         color = LocalContentColor.current.copy(alpha = 0.6f),
