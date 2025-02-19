@@ -1,4 +1,4 @@
-package com.example.videoplayerassignment.ui.theme
+package com.example.videoplayerassignment.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build

@@ -1,4 +1,4 @@
-package com.example.videoplayerassignment.ui.theme
+package com.example.videoplayerassignment.presentation.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

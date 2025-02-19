@@ -5,11 +5,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Film(
-    @SerialName("filmId")
+    @SerialName("kinopoiskId")
     val id: Int,
     val nameRu: String,
     val nameEn: String?,
-    val year: String?,
+    val year: Int?,
     val posterUrl: String,
     val posterUrlPreview: String,
 )
