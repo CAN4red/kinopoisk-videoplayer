@@ -12,5 +12,5 @@ data class FilmEntity(
     val year: Int?,
     val posterUrlPreview: String,
     @ColumnInfo(name = "insertion_order")
-    val insertionOrder: Long = System.currentTimeMillis()
+    val insertionOrder: Long = System.nanoTime()
 )

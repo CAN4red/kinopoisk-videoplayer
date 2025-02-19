@@ -10,6 +10,8 @@ import com.example.videoplayerassignment.data.remote.dto.toFilmListInfo
 import com.example.videoplayerassignment.domain.model.FilmItem
 import com.example.videoplayerassignment.domain.model.FilmListInfo
 import com.example.videoplayerassignment.domain.repository.FilmRepository
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.io.IOException
@@ -67,7 +69,12 @@ class FilmRepositoryImpl @Inject constructor(
         val countryEntities = films.flatMap { film -> FilmMapper.domainToCountryEntitiesList(film) }
         val genreEntities = films.flatMap { film -> FilmMapper.domainToGenresEntitiesList(film) }
 
-        filmEntities.forEach { filmEntity -> dao.insertFilm(filmEntity) }
+        coroutineScope {
+            filmEntities.forEach {
+                filmEntity -> dao.insertFilm(filmEntity)
+//                delay(1)
+            }
+        }
         countryEntities.forEach { countryEntity -> dao.insertCountry(countryEntity) }
         genreEntities.forEach { genreEntity -> dao.insertGenre(genreEntity) }
     }

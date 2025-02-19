@@ -1,12 +1,12 @@
 package com.example.videoplayerassignment.presentation.film_list
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.videoplayerassignment.common.Resource
 import com.example.videoplayerassignment.domain.model.FilmItem
-import com.example.videoplayerassignment.domain.use_case.GetFilmListInfoUseCase
-import com.example.videoplayerassignment.domain.use_case.GetNewFilmPagesUseCase
+import com.example.videoplayerassignment.domain.use_case.GetCachedFilmsUseCase
+import com.example.videoplayerassignment.domain.use_case.GetNewFilmsUseCase
+import com.example.videoplayerassignment.domain.use_case.UpdateFilmListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,47 +17,35 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FilmListViewModel @Inject constructor(
-    private val getNewFilmPagesUseCase: GetNewFilmPagesUseCase,
-    private val getFilmListInfoUseCase: GetFilmListInfoUseCase,
+    private val getCachedFilmsUseCase: GetCachedFilmsUseCase,
+    private val updateFilmListUseCase: UpdateFilmListUseCase,
+    private val getNewFilmsUseCase: GetNewFilmsUseCase,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(FilmListState())
     val state: StateFlow<FilmListState> = _state.asStateFlow()
 
     init {
-        loadInitialData()
+        loadCacheData()
+        updateData()
     }
 
-    fun loadMoreFilms() {
-        Log.i("State Value", state.value.toString())
-        if (state.value.isLoading) return
+    fun loadNewFilms() {
+        if (_state.value.isLoading) return
 
         viewModelScope.launch {
-            loadInitialData()
-        }
-    }
-
-    private fun loadInitialData() {
-        viewModelScope.launch {
-            getNewFilmPagesUseCase().collect { resource ->
+            getNewFilmsUseCase().collect { resource ->
                 when (resource) {
                     is Resource.Loading -> _state.update { currentState ->
-                        currentState.copy(
-                            isLoading = true,
-                            films = resource.data ?: emptyList()
-                        )
+                        currentState.copy(isLoading = true)
                     }
                     is Resource.Error -> _state.update { currentState ->
-                        currentState.copy(
-                            isLoading = false,
-                            films = resource.data ?: emptyList(),
-                            error = resource.message
-                        )
+                        currentState.copy(error = resource.message, isLoading = false)
                     }
                     is Resource.Success -> _state.update { currentState ->
                         currentState.copy(
                             isLoading = false,
-                            films = resource.data,
+                            films = currentState.films + resource.data,
                             error = ""
                         )
                     }
@@ -66,36 +54,27 @@ class FilmListViewModel @Inject constructor(
         }
     }
 
-    private fun updateFilmState(resource: Resource<List<FilmItem>>) {
-        Log.i("Success Update", if (resource is Resource.Success) resource.data.size.toString() else "Not Success")
-        _state.update { current ->
-            when (resource) {
-                is Resource.Success -> current.copy(
-                    films = resource.data,
-                    isLoading = false,
-                    error = ""
-                )
-
-
-                is Resource.Error -> current.copy(
-                    isLoading = false,
-                    error = resource.message,
-                    films = resource.data ?: current.films
-                )
-
-                is Resource.Loading -> current.copy(
-                    films = resource.data ?: current.films
-                )
+    fun updateData() {
+        viewModelScope.launch {
+            updateFilmListUseCase().collect { resource ->
+                _state.value = resource.processResource()
             }
         }
     }
 
-    private fun updateErrorState(message: String?) {
-        _state.update {
-            it.copy(
-                isLoading = false,
-                error = message ?: "Unknown error"
-            )
+    private fun loadCacheData() {
+        viewModelScope.launch {
+            getCachedFilmsUseCase().collect { resource ->
+                _state.value = resource.processResource()
+            }
+        }
+    }
+
+    private fun Resource<List<FilmItem>>.processResource(): FilmListState {
+        return when (this) {
+            is Resource.Loading -> _state.value.copy(isLoading = true)
+            is Resource.Error -> FilmListState(error = message)
+            is Resource.Success -> FilmListState(films = data)
         }
     }
 }
