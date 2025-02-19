@@ -10,6 +10,6 @@ class GetFilmListInfoUseCase @Inject constructor(
     private val repository: FilmRepository
 ) {
     operator fun invoke(): Flow<Resource<FilmListInfo>> {
-        return repository.getFilmsListInfo()
+        return repository.getFilmListInfo()
     }
 }

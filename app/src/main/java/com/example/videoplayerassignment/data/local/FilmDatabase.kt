@@ -1,4 +1,4 @@
-package com.example.videoplayerassignment.data.remote
+package com.example.videoplayerassignment.data.local
 
 import android.content.Context
 import androidx.room.Database
@@ -11,7 +11,7 @@ import com.example.videoplayerassignment.data.local.entities.GenreEntity
 
 @Database(
     entities = [FilmEntity::class, CountryEntity::class, GenreEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class FilmDatabase : RoomDatabase() {

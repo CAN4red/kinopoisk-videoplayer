@@ -1,6 +1,9 @@
 package com.example.videoplayerassignment.di
 
+import android.content.Context
 import com.example.videoplayerassignment.common.Constants
+import com.example.videoplayerassignment.data.local.FilmDatabase
+import com.example.videoplayerassignment.data.local.dao.FilmDao
 import com.example.videoplayerassignment.data.remote.api.FilmApi
 import com.example.videoplayerassignment.data.repository.FilmRepositoryImpl
 import com.example.videoplayerassignment.di.ApiAccess.API_KEY
@@ -9,6 +12,7 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -18,7 +22,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object RemoteDataModule {
+object DataModule {
 
     @Provides
     @Singleton
@@ -49,7 +53,19 @@ object RemoteDataModule {
 
     @Provides
     @Singleton
-    fun provideFilmRepository(api: FilmApi): FilmRepository {
-        return FilmRepositoryImpl(api)
+    fun provideFilmRepository(api: FilmApi, dao: FilmDao): FilmRepository {
+        return FilmRepositoryImpl(api, dao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFilmDatabase(@ApplicationContext context: Context): FilmDatabase {
+        return FilmDatabase.getInstance(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFilmDao(db: FilmDatabase): FilmDao {
+        return db.filmDao
     }
 }

@@ -33,33 +33,34 @@ class FilmListViewModel @Inject constructor(
         if (state.value.isLoading) return
 
         viewModelScope.launch {
-            getNewFilmPagesUseCase(
-                currentFilms = _state.value.films,
-                filmListInfo = _state.value.filmListInfo
-            ).collect { resource ->
-                Log.i("Collect Resource", if (resource is Resource.Success) resource.data.size.toString() else "Not Success")
-                updateFilmState(resource)
-            }
+            loadInitialData()
         }
     }
 
     private fun loadInitialData() {
         viewModelScope.launch {
-            getFilmListInfoUseCase().collect { resource ->
-                Log.i("Load Init Data Result", resource.toString())
+            getNewFilmPagesUseCase().collect { resource ->
                 when (resource) {
-                    is Resource.Success -> {
-                        _state.update {
-                            it.copy(
-                                filmListInfo = resource.data,
-                                isLoading = false,
-                            )
-                        }
-                        loadMoreFilms()
+                    is Resource.Loading -> _state.update { currentState ->
+                        currentState.copy(
+                            isLoading = true,
+                            films = resource.data ?: emptyList()
+                        )
                     }
-
-                    is Resource.Error -> updateErrorState(resource.message)
-                    is Resource.Loading -> _state.update { it.copy(isLoading = true) }
+                    is Resource.Error -> _state.update { currentState ->
+                        currentState.copy(
+                            isLoading = false,
+                            films = resource.data ?: emptyList(),
+                            error = resource.message
+                        )
+                    }
+                    is Resource.Success -> _state.update { currentState ->
+                        currentState.copy(
+                            isLoading = false,
+                            films = resource.data,
+                            error = ""
+                        )
+                    }
                 }
             }
         }

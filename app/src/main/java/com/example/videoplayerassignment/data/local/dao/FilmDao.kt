@@ -1,5 +1,6 @@
 package com.example.videoplayerassignment.data.local.dao
 
+import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -9,6 +10,7 @@ import com.example.videoplayerassignment.data.local.entities.FilmEntity
 import com.example.videoplayerassignment.data.local.entities.GenreEntity
 import com.example.videoplayerassignment.data.local.relations.FilmWithCountriesAndGenresEntity
 
+@Dao
 interface FilmDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -25,6 +27,6 @@ interface FilmDao {
     suspend fun deleteAllFilms()
 
     @Transaction
-    @Query("SELECT * FROM films")
+    @Query("SELECT * FROM films ORDER BY insertion_order ASC")
     suspend fun getAllFilms(): List<FilmWithCountriesAndGenresEntity>
 }

@@ -8,22 +8,22 @@ import com.example.videoplayerassignment.data.remote.dto.FilmDto
 import com.example.videoplayerassignment.domain.model.FilmItem
 
 object FilmMapper {
-    fun dtoToFilmEntity(dto: FilmDto) = FilmEntity(
-        id = dto.id,
-        name = dto.name,
-        year = dto.year,
-        posterUrlPreview = dto.posterUrlPreview
+    fun domainToFilmEntity(filmItem: FilmItem) = FilmEntity(
+        id = filmItem.id,
+        name = filmItem.name,
+        year = filmItem.year.toIntYear(),
+        posterUrlPreview = filmItem.posterUrlPreview
     )
 
-    fun dtoToCountryEntitiesList(dto: FilmDto): List<CountryEntity> {
-        return dto.countries.map {
-            CountryEntity(id = dto.id, name = it.name)
+    fun domainToCountryEntitiesList(filmItem: FilmItem): List<CountryEntity> {
+        return filmItem.countries.map { countryString ->
+            CountryEntity(id = filmItem.id, name = countryString)
         }
     }
 
-    fun dtoToGenresEntitiesList(dto: FilmDto): List<GenreEntity> {
-        return dto.genres.map {
-            GenreEntity(id = dto.id, name = it.name)
+    fun domainToGenresEntitiesList(filmItem: FilmItem): List<GenreEntity> {
+        return filmItem.genres.map { genreString ->
+            GenreEntity(id = filmItem.id, name = genreString)
         }
     }
 
@@ -44,4 +44,12 @@ object FilmMapper {
         genres = dto.genres.map { it.name },
         posterUrlPreview = dto.posterUrlPreview
     )
+
+    private fun String.toIntYear(): Int? {
+        return try {
+            this.toInt()
+        } catch (e: NumberFormatException) {
+            null
+        }
+    }
 }
