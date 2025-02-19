@@ -4,10 +4,10 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "films")
-data class FilmItemEntity(
+data class FilmEntity(
     @PrimaryKey(autoGenerate = false)
     val id: Int,
     val name: String,
-    val year: String,
+    val year: Int?,
     val posterUrlPreview: String,
 )

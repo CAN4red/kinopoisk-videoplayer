@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
     tableName = "genres",
     foreignKeys = [
         ForeignKey(
-            entity = FilmItemEntity::class,
+            entity = FilmEntity::class,
             parentColumns = ["id"],
             childColumns = ["id"],
             onDelete = ForeignKey.CASCADE,

@@ -1,6 +1,5 @@
 package com.example.videoplayerassignment.data.remote.dto
 
-import com.example.videoplayerassignment.domain.model.FilmItem
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -14,13 +13,4 @@ data class FilmDto(
     val countries: List<Country>,
     val genres: List<Genre>,
     val posterUrlPreview: String,
-)
-
-fun FilmDto.toFilmItem() = FilmItem(
-    id = id,
-    name = name,
-    year = year?.toString() ?: "",
-    countries = countries.map { it.name },
-    genres = genres.map { it.name },
-    posterUrlPreview = posterUrlPreview
 )

@@ -1,5 +1,6 @@
 package com.example.videoplayerassignment.data.remote.dto
 
+import com.example.videoplayerassignment.data.mappers.FilmMapper
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -9,4 +10,4 @@ data class FilmsList(
     val films: List<FilmDto>,
 )
 
-fun FilmsList.toFilmItemList() = films.map { it.toFilmItem() }
+fun FilmsList.toFilmItemList() = films.map { FilmMapper.dtoToDomain(it) }

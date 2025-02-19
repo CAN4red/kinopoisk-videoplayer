@@ -5,14 +5,14 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import com.example.videoplayerassignment.data.local.entities.CountryEntity
-import com.example.videoplayerassignment.data.local.entities.FilmItemEntity
+import com.example.videoplayerassignment.data.local.entities.FilmEntity
 import com.example.videoplayerassignment.data.local.entities.GenreEntity
-import com.example.videoplayerassignment.data.local.relations.FilmItemWithCountriesAndGenresEntity
+import com.example.videoplayerassignment.data.local.relations.FilmWithCountriesAndGenresEntity
 
 interface FilmDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertFilm(film: FilmItemEntity)
+    suspend fun insertFilm(film: FilmEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCountry(country: CountryEntity)
@@ -26,5 +26,5 @@ interface FilmDao {
 
     @Transaction
     @Query("SELECT * FROM films")
-    suspend fun getAllFilms(): List<FilmItemWithCountriesAndGenresEntity>
+    suspend fun getAllFilms(): List<FilmWithCountriesAndGenresEntity>
 }
