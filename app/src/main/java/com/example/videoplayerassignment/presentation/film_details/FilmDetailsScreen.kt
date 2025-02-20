@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
-fun FilmDetailsState(
+fun FilmDetailsScreen(
     modifier: Modifier = Modifier,
     viewModel: FilmDetailsViewModel = hiltViewModel()
 ) {
