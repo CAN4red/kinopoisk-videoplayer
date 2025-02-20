@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Genre(
+data class GenreDto(
     @SerialName("genre")
     val name: String
 )

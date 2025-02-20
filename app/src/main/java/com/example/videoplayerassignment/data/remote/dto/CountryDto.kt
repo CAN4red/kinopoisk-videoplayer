@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Country(
+data class CountryDto(
     @SerialName("country")
     val name: String
 )

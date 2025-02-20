@@ -4,13 +4,13 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class FilmDto(
+data class FilmDetailsDto(
     @SerialName("kinopoiskId")
     val id: Int,
     @SerialName("nameRu")
     val name: String,
     val year: Int?,
+    val description: String,
     val countries: List<CountryDto>,
     val genres: List<GenreDto>,
-    val posterUrlPreview: String,
 )
