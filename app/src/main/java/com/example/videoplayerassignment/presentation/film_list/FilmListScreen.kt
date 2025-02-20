@@ -21,7 +21,8 @@ fun FilmListScreen(
     FilmList(
         films = state.films,
         onFilmItemClick = { },
-        loadMoreFilms = viewModel::loadNewFilms,
+        onUpdateFilms = viewModel::updateFilms,
+        loadMoreFilms = viewModel::loadMoreFilms,
         modifier = modifier.fillMaxSize()
     )
 }

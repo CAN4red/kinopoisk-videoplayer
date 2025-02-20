@@ -84,4 +84,7 @@ dependencies {
 
     // Navigation
     implementation(libs.androidx.navigation.compose)
+
+    // SwipeRefreshLayout
+    implementation(libs.accompanist.swiperefresh)
 }

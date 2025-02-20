@@ -27,10 +27,10 @@ class FilmListViewModel @Inject constructor(
 
     init {
         loadCacheData()
-        updateData()
+        updateFilms()
     }
 
-    fun loadNewFilms() {
+    fun loadMoreFilms() {
         if (_state.value.isLoading) return
 
         viewModelScope.launch {
@@ -54,7 +54,7 @@ class FilmListViewModel @Inject constructor(
         }
     }
 
-    fun updateData() {
+    fun updateFilms() {
         viewModelScope.launch {
             updateFilmListUseCase().collect { resource ->
                 _state.value = resource.processResource()
