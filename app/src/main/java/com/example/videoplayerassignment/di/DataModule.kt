@@ -5,8 +5,10 @@ import com.example.videoplayerassignment.common.Constants
 import com.example.videoplayerassignment.data.local.FilmDatabase
 import com.example.videoplayerassignment.data.local.dao.FilmDao
 import com.example.videoplayerassignment.data.remote.api.FilmApi
+import com.example.videoplayerassignment.data.repository.FilmDetailsRepositoryImpl
 import com.example.videoplayerassignment.data.repository.FilmRepositoryImpl
 import com.example.videoplayerassignment.di.ApiAccess.API_KEY
+import com.example.videoplayerassignment.domain.repository.FilmDetailsRepository
 import com.example.videoplayerassignment.domain.repository.FilmRepository
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
@@ -55,6 +57,12 @@ object DataModule {
     @Singleton
     fun provideFilmRepository(api: FilmApi, dao: FilmDao): FilmRepository {
         return FilmRepositoryImpl(api, dao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFilmDetailsRepository(api: FilmApi): FilmDetailsRepository {
+        return FilmDetailsRepositoryImpl(api)
     }
 
     @Provides

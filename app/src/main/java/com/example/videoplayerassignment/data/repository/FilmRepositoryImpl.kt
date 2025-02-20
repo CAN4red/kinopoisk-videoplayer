@@ -10,7 +10,6 @@ import com.example.videoplayerassignment.data.remote.dto.toFilmListInfo
 import com.example.videoplayerassignment.domain.model.FilmItem
 import com.example.videoplayerassignment.domain.model.FilmListInfo
 import com.example.videoplayerassignment.domain.repository.FilmRepository
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.io.IOException
@@ -23,43 +22,35 @@ class FilmRepositoryImpl @Inject constructor(
 
     override fun getFilmListInfo(): Flow<Resource<FilmListInfo>> = flow {
         try {
-            emit(Resource.Loading<FilmListInfo>())
+            emit(Resource.Loading())
             val filmListInfo = api.getFilmsListInfo().toFilmListInfo()
-            emit(Resource.Success<FilmListInfo>(filmListInfo))
+            emit(Resource.Success(filmListInfo))
         } catch (e: HttpException) {
-            emit(
-                Resource.Error<FilmListInfo>(
-                    e.localizedMessage ?: "An unexpected Http error occurred"
-                )
-            )
+            emit(Resource.Error(e.localizedMessage ?: "An unexpected Http error occurred"))
         } catch (e: IOException) {
-            emit(Resource.Error<FilmListInfo>("Could not reach server. Check your Internet connection"))
+            emit(Resource.Error("Could not reach server. Check your Internet connection"))
         }
     }
 
     override fun getFilmListByPage(page: Int): Flow<Resource<List<FilmItem>>> = flow {
         try {
-            emit(Resource.Loading<List<FilmItem>>())
+            emit(Resource.Loading())
             val films = api.getFilmListByPage(page).toFilmItemList()
-            emit(Resource.Success<List<FilmItem>>(films))
+            emit(Resource.Success(films))
         } catch (e: HttpException) {
-            emit(
-                Resource.Error<List<FilmItem>>(
-                    e.localizedMessage ?: "An unexpected Http error occurred"
-                )
-            )
+            emit(Resource.Error(e.localizedMessage ?: "An unexpected Http error occurred"))
         } catch (e: IOException) {
-            emit(Resource.Error<List<FilmItem>>("Could not reach server. Check your Internet connection"))
+            emit(Resource.Error("Could not reach server. Check your Internet connection"))
         }
     }
 
     override fun getAllFilmsFromCache(): Flow<Resource<List<FilmItem>>> = flow {
         try {
-            emit(Resource.Loading<List<FilmItem>>())
+            emit(Resource.Loading())
             val filmsFromCache = dao.getAllFilms().map { film -> FilmMapper.entityToDomain(film) }
-            emit(Resource.Success<List<FilmItem>>(filmsFromCache))
+            emit(Resource.Success(filmsFromCache))
         } catch (e: Exception) {
-            emit(Resource.Error<List<FilmItem>>(e.localizedMessage ?: "Unknown error occurred"))
+            emit(Resource.Error(e.localizedMessage ?: "Unknown error occurred"))
         }
     }
 
@@ -68,12 +59,7 @@ class FilmRepositoryImpl @Inject constructor(
         val countryEntities = films.flatMap { film -> FilmMapper.domainToCountryEntitiesList(film) }
         val genreEntities = films.flatMap { film -> FilmMapper.domainToGenresEntitiesList(film) }
 
-        coroutineScope {
-            filmEntities.forEach { filmEntity ->
-                dao.insertFilm(filmEntity)
-//                delay(1)
-            }
-        }
+        filmEntities.forEach { filmEntity -> dao.insertFilm(filmEntity) }
         countryEntities.forEach { countryEntity -> dao.insertCountry(countryEntity) }
         genreEntities.forEach { genreEntity -> dao.insertGenre(genreEntity) }
     }

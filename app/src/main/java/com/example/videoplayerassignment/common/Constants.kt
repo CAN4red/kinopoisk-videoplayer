@@ -4,5 +4,7 @@ object Constants {
 
     const val BASE_URL = "https://kinopoiskapiunofficial.tech/"
 
+    const val PARAM_FILM_ID = "id"
+
     const val PAGE_LENGTH = 20
 }
