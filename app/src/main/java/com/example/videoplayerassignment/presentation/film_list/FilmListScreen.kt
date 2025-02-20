@@ -13,11 +13,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.example.videoplayerassignment.common.NavRoutes
 import com.example.videoplayerassignment.presentation.common.snackbar.ErrorSnackbar
 import com.example.videoplayerassignment.presentation.film_list.components.film_list.FilmList
 
 @Composable
 fun FilmListScreen(
+    navController: NavController,
     modifier: Modifier = Modifier,
     viewModel: FilmListViewModel = hiltViewModel()
 ) {
@@ -43,7 +46,7 @@ fun FilmListScreen(
     ) { paddingValues ->
         FilmList(
             films = state.films,
-            onFilmItemClick = { },
+            onFilmItemClick = { filmId -> navController.navigate(NavRoutes.FILM_DETAILS + "/${filmId}") },
             onUpdateFilms = viewModel::updateFilms,
             loadMoreFilms = viewModel::loadMoreFilms,
             modifier = modifier

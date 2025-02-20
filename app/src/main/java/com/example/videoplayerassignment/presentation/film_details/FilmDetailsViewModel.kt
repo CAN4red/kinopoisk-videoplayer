@@ -22,8 +22,8 @@ class FilmDetailsViewModel @Inject constructor(
     val state: StateFlow<FilmDetailsState> get() = _state.asStateFlow()
 
     init {
-        savedStateHandle.get<Int>(Constants.PARAM_FILM_ID)?.let { filmId ->
-            getFilmDetails(filmId)
+        savedStateHandle.get<String>(Constants.PARAM_FILM_ID)?.let { filmId ->
+            getFilmDetails(filmId.toInt())
         }
     }
 
