@@ -22,12 +22,12 @@ class GetNewFilmsUseCase @Inject constructor(
         val currentPage = cachedFilms.size / Constants.PAGE_LENGTH
         val nextPage = currentPage + 1
 
-        if (nextPage > filmListInfo.totalPages) {
-            emit(Resource.Success(emptyList()))
+        if (filmListInfo.totalPages in 1..<nextPage) {
+            emit(Resource.Error("There is no more films in the list"))
         } else {
-            val newFilms = repository.getFilmListByPage(nextPage).processFlow().data ?: emptyList<FilmItem>()
-            repository.saveFilms(newFilms)
-            emit(Resource.Success(newFilms))
+            val newFilmsResource = repository.getFilmListByPage(nextPage).processFlow()
+            repository.saveFilms(newFilmsResource.data ?: emptyList<FilmItem>())
+            emit(newFilmsResource)
         }
     }
 }

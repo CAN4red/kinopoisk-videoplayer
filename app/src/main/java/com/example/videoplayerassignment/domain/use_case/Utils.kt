@@ -9,8 +9,8 @@ object Utils {
         var result: Resource<T> = Resource.Loading()
         this.collect { resource ->
             result = when (resource) {
-                is Resource.Loading -> Resource.Loading()
-                is Resource.Error -> Resource.Error(resource.message)
+                is Resource.Loading -> Resource.Loading(resource.data)
+                is Resource.Error -> Resource.Error(resource.message, resource.data)
                 is Resource.Success -> Resource.Success(resource.data)
             }
         }

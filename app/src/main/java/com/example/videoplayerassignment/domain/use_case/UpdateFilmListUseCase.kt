@@ -15,12 +15,11 @@ class UpdateFilmListUseCase @Inject constructor(
         emit(Resource.Loading())
 
         val updatedFilmsResource = repository.getFilmListByPage(1).processFlow()
+        emit(updatedFilmsResource)
 
         if (updatedFilmsResource is Resource.Success) {
             repository.clearCache()
             repository.saveFilms(updatedFilmsResource.data)
-
-            emit(updatedFilmsResource)
         }
     }
 }

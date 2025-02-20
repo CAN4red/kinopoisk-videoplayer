@@ -25,5 +25,4 @@ fun FilmList(
             modifier = Modifier.fillMaxSize()
         )
     }
-
 }

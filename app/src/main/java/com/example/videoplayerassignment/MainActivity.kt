@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import com.example.videoplayerassignment.presentation.film_list.FilmListScreen
+import com.example.videoplayerassignment.presentation.common.snackbar.ErrorSnackbar
 import com.example.videoplayerassignment.presentation.ui.theme.VideoplayerAssignmentTheme
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -39,14 +39,16 @@ class FilmListViewModel @Inject constructor(
                     is Resource.Loading -> _state.update { currentState ->
                         currentState.copy(isLoading = true)
                     }
+
                     is Resource.Error -> _state.update { currentState ->
                         currentState.copy(error = resource.message, isLoading = false)
                     }
+
                     is Resource.Success -> _state.update { currentState ->
                         currentState.copy(
                             isLoading = false,
                             films = currentState.films + resource.data,
-                            error = ""
+                            error = null
                         )
                     }
                 }
@@ -70,10 +72,16 @@ class FilmListViewModel @Inject constructor(
         }
     }
 
+    fun clearError() {
+        _state.update { currentState ->
+            currentState.copy(error = null)
+        }
+    }
+
     private fun Resource<List<FilmItem>>.processResource(): FilmListState {
         return when (this) {
             is Resource.Loading -> _state.value.copy(isLoading = true)
-            is Resource.Error -> FilmListState(error = message)
+            is Resource.Error -> _state.value.copy(error = message, isLoading = false)
             is Resource.Success -> FilmListState(films = data)
         }
     }
