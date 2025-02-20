@@ -7,7 +7,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.videoplayerassignment.presentation.film_list.components.FilmList
+import com.example.videoplayerassignment.presentation.film_list.components.film_list.FilmList
 
 @Composable
 fun FilmListScreen(
