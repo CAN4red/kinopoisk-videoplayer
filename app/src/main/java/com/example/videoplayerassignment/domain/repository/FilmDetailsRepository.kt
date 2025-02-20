@@ -4,7 +4,7 @@ import com.example.videoplayerassignment.common.Resource
 import com.example.videoplayerassignment.domain.model.FilmDetails
 import kotlinx.coroutines.flow.Flow
 
-interface FilmVideoRepository {
+interface FilmDetailsRepository {
 
     fun getFilmDetails(id: Int): Flow<Resource<FilmDetails>>
 }
