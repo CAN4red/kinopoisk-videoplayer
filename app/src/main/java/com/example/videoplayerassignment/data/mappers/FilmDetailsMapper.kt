@@ -1,8 +1,10 @@
 package com.example.videoplayerassignment.data.mappers
 
 import com.example.videoplayerassignment.data.remote.dto.FilmDetailsDto
+import com.example.videoplayerassignment.data.remote.dto.FilmVideoDto
 import com.example.videoplayerassignment.data.remote.dto.FilmVideosDto
 import com.example.videoplayerassignment.domain.model.FilmDetails
+import com.example.videoplayerassignment.domain.model.FilmVideo
 
 object FilmDetailsMapper {
 
@@ -13,6 +15,11 @@ object FilmDetailsMapper {
         description = detailsDto.description,
         countries = detailsDto.countries.map { it.name },
         genres = detailsDto.genres.map { it.name },
-        videoUrl = videosDto.videos.first().url
+        videos = videosDto.videos.map { dtoToDomain(it) }
+    )
+
+    private fun dtoToDomain(filmVideoDto: FilmVideoDto) = FilmVideo(
+        name = filmVideoDto.name,
+        url = filmVideoDto.url
     )
 }

@@ -7,5 +7,5 @@ data class FilmDetails(
     val description: String,
     val countries: List<String>,
     val genres: List<String>,
-    val videoUrl: String,
+    val videos: List<FilmVideo>,
 )
