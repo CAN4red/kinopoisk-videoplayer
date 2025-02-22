@@ -41,7 +41,9 @@ fun FilmDetailsScreen(
                 FilmDetailsContent(
                     player = viewModel.player,
                     onMediaEvent = viewModel::onMediaEvent,
-                    filmDetails = state.filmDetails
+                    filmDetails = state.filmDetails,
+                    hasVideo = state.hasVideo,
+                    navigateBack = navController::navigateUp
                 )
             }
         }

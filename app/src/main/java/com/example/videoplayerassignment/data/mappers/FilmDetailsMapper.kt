@@ -16,7 +16,7 @@ object FilmDetailsMapper {
         countries = detailsDto.countries.map { it.name },
         genres = detailsDto.genres.map { it.name },
         videos = videosDto.videos
-            .filter { it.site == "UNKNOWN" }
+            .filter { it.url.endsWith(".mp4") }
             .map { dtoToDomain(it) }
     )
 

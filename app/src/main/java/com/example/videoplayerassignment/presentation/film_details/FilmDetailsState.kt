@@ -7,4 +7,7 @@ data class FilmDetailsState(
     val isLoading: Boolean = false,
     val error: String? = null,
     val isVideoStarted: Boolean = false
-)
+) {
+    val hasVideo: Boolean
+        get() = filmDetails?.videos?.isNotEmpty() ?: false
+}
