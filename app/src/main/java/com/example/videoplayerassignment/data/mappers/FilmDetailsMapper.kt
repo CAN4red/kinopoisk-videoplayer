@@ -15,7 +15,9 @@ object FilmDetailsMapper {
         description = detailsDto.description,
         countries = detailsDto.countries.map { it.name },
         genres = detailsDto.genres.map { it.name },
-        videos = videosDto.videos.map { dtoToDomain(it) }
+        videos = videosDto.videos
+            .filter { it.site == "UNKNOWN" }
+            .map { dtoToDomain(it) }
     )
 
     private fun dtoToDomain(filmVideoDto: FilmVideoDto) = FilmVideo(

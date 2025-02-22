@@ -1,8 +1,6 @@
 package com.example.videoplayerassignment.presentation.film_list.components.film_item
 
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
@@ -13,24 +11,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.videoplayerassignment.domain.model.FilmItem
+import com.example.videoplayerassignment.presentation.film_list.components.FilmListUtils
 
 @Composable
 fun FilmItemContent(
     film: FilmItem,
     modifier: Modifier = Modifier,
 ) {
-    val cardAspectRatio = 3f
-
     Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .aspectRatio(cardAspectRatio),
+        modifier = modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
     ) {
         FilmContentRow(
             imageUrl = film.posterUrlPreview,
             title = film.name,
-            year = film.year
+            subtitle = FilmListUtils.composeSubtitles(
+                genres = film.genres,
+                year = film.year,
+                countries = film.countries
+            )
         )
     }
 }
@@ -39,11 +38,11 @@ fun FilmItemContent(
 private fun FilmContentRow(
     imageUrl: String,
     title: String,
-    year: String
+    subtitle: String
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxWidth()
     ) {
         FilmThumbnail(
             imageUrl = imageUrl,
@@ -52,7 +51,7 @@ private fun FilmContentRow(
 
         FilmTextInfo(
             title = title,
-            year = year,
+            subtitle = subtitle,
             modifier = Modifier.weight(1f)
         )
     }
@@ -60,7 +59,7 @@ private fun FilmContentRow(
 
 @Preview
 @Composable
-fun FilmListItemContentPreview() {
+private fun FilmListItemContentPreview() {
     val film = FilmItem(
         id = 1,
         name = "Avengers",

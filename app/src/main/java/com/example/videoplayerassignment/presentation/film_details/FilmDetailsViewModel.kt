@@ -3,6 +3,8 @@ package com.example.videoplayerassignment.presentation.film_details
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.media3.common.MediaItem
+import androidx.media3.exoplayer.ExoPlayer
 import com.example.videoplayerassignment.common.Constants
 import com.example.videoplayerassignment.common.Resource
 import com.example.videoplayerassignment.domain.use_case.GetFilmDetailsUseCase
@@ -16,26 +18,56 @@ import javax.inject.Inject
 @HiltViewModel
 class FilmDetailsViewModel @Inject constructor(
     private val getFilmDetailsUseCase: GetFilmDetailsUseCase,
-    savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle,
+    val player: ExoPlayer,
 ) : ViewModel() {
+
     private val _state = MutableStateFlow(FilmDetailsState())
-    val state: StateFlow<FilmDetailsState> get() = _state.asStateFlow()
+    val state: StateFlow<FilmDetailsState> = _state.asStateFlow()
 
     init {
+        loadFilmDetails()
+    }
+
+    fun loadFilmDetails() {
         savedStateHandle.get<String>(Constants.PARAM_FILM_ID)?.let { filmId ->
-            getFilmDetails(filmId.toInt())
+            loadFilmDetailsById(filmId.toInt())
         }
     }
 
-    private fun getFilmDetails(filmId: Int) {
+    fun onMediaEvent(event: MediaEvent) {
+        when (event) {
+            MediaEvent.Play -> playVideo()
+            MediaEvent.Pause -> player.pause()
+            MediaEvent.SeekForward -> player.seekBack()
+            MediaEvent.SeekBack -> player.seekForward()
+        }
+    }
+
+    private fun playVideo() {
+        if (_state.value.isVideoStarted) {
+            player.play()
+        } else {
+            _state.value.filmDetails?.let { filmDetails ->
+                player.setMediaItem(MediaItem.fromUri(filmDetails.videos.first().url))
+            }
+        }
+    }
+
+    private fun loadFilmDetailsById(filmId: Int) {
         viewModelScope.launch {
-            getFilmDetailsUseCase(filmId).collect { resource ->
-                _state.value = when (resource) {
+            getFilmDetailsUseCase(filmId).collect { result ->
+                _state.value = when (result) {
+                    is Resource.Success -> FilmDetailsState(filmDetails = result.data)
+                    is Resource.Error -> FilmDetailsState(error = result.message)
                     is Resource.Loading -> FilmDetailsState(isLoading = true)
-                    is Resource.Error -> FilmDetailsState(error = resource.message)
-                    is Resource.Success -> FilmDetailsState(filmDetails = resource.data)
                 }
             }
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        player.release()
     }
 }

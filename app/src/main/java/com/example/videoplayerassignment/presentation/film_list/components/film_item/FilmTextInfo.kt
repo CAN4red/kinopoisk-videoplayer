@@ -16,13 +16,13 @@ import androidx.compose.ui.unit.dp
 @Composable
 internal fun FilmTextInfo(
     title: String,
-    year: String,
+    subtitle: String,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier.padding(8.dp)) {
         FilmTitleText(text = title)
         Spacer(modifier = Modifier.height(4.dp))
-        FilmSubtitleText(year = year)
+        FilmSubtitleText(subtitle = subtitle)
     }
 }
 
@@ -39,9 +39,9 @@ private fun FilmTitleText(text: String) {
 }
 
 @Composable
-private fun FilmSubtitleText(year: String) {
+private fun FilmSubtitleText(subtitle: String) {
     Text(
-        text = year,
+        text = subtitle,
         style = MaterialTheme.typography.titleMedium,
         fontWeight = FontWeight.SemiBold,
         color = LocalContentColor.current.copy(alpha = 0.6f),

@@ -5,5 +5,6 @@ import com.example.videoplayerassignment.domain.model.FilmDetails
 data class FilmDetailsState(
     val filmDetails: FilmDetails? = null,
     val isLoading: Boolean = false,
-    val error: String? = null
+    val error: String? = null,
+    val isVideoStarted: Boolean = false
 )
