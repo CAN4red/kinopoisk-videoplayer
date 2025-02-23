@@ -1,4 +1,4 @@
-package com.example.videoplayerassignment.features.film_details.presentation.components
+package com.example.videoplayerassignment.features.film_details.presentation.components.player
 
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.runtime.Composable
@@ -15,7 +15,7 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.media3.common.Player
 import androidx.media3.ui.PlayerView
-import com.example.videoplayerassignment.features.film_details.presentation.FilmDetailsUtils
+import com.example.videoplayerassignment.features.film_details.presentation.components.FilmDetailsUtils
 
 @Composable
 fun PlayerViewContainer(

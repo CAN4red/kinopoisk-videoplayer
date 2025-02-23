@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Kinopoisk Video Player</string>
+    <string name="film_thumbnail">Film Thumbnail</string>
+    <string name="countries_label">"Countries: "</string>
+    <string name="genres_label">"Genres: "</string>
+    <string name="year_label">"Year: "</string>
+    <string name="seek_back">Seek Back</string>
+    <string name="play_pause">Play/Pause</string>
+    <string name="seek_forward">Seek Forward</string>
+    <string name="no_videos">no videos</string>
+    <string name="go_back">Go Back</string>
+    <string name="no_internet_connection">no internet connection</string>
+    <string name="retry">Retry</string>
 </resources>

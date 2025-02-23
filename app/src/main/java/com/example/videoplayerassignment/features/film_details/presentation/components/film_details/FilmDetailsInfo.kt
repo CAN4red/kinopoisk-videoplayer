@@ -1,4 +1,4 @@
-package com.example.videoplayerassignment.features.film_details.presentation.components
+package com.example.videoplayerassignment.features.film_details.presentation.components.film_details
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -15,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -22,8 +23,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.videoplayerassignment.R
 import com.example.videoplayerassignment.features.film_details.domain.model.FilmDetails
-import com.example.videoplayerassignment.features.film_details.presentation.FilmDetailsUtils.joinByCommas
+import com.example.videoplayerassignment.features.film_details.presentation.components.FilmDetailsUtils.joinByCommas
 
 @Composable
 fun FilmDetailsInfo(
@@ -62,17 +64,17 @@ fun FilmDetailsInfo(
         Spacer(modifier = Modifier.height(24.dp))
 
         DisplayInfo(
-            label = "Countries: ",
+            label = stringResource(R.string.countries_label),
             value = filmDetails.countries.joinByCommas(),
             modifier = Modifier.padding(bottom = 8.dp)
         )
         DisplayInfo(
-            label = "Genres: ",
+            label = stringResource(R.string.genres_label),
             value = filmDetails.genres.joinByCommas(),
             modifier = Modifier.padding(bottom = 8.dp)
         )
         DisplayInfo(
-            label = "Year: ",
+            label = stringResource(R.string.year_label),
             value = filmDetails.year,
             modifier = Modifier.padding(bottom = 8.dp)
         )

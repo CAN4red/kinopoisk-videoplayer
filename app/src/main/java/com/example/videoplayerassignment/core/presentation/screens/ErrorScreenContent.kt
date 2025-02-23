@@ -16,8 +16,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.videoplayerassignment.R
 
 @Composable
 fun ErrorScreenContent(
@@ -34,7 +36,7 @@ fun ErrorScreenContent(
     ) {
         Icon(
             imageVector = Icons.Default.ErrorOutline,
-            contentDescription = "lol",
+            contentDescription = stringResource(R.string.no_internet_connection),
             modifier = Modifier.size(128.dp),
         )
         Text(
@@ -43,7 +45,7 @@ fun ErrorScreenContent(
             style = MaterialTheme.typography.bodyMedium
         )
         Spacer(modifier = Modifier.height(8.dp))
-        Button(onClick = onRetry) { Text("Retry") }
+        Button(onClick = onRetry) { Text(stringResource(R.string.retry)) }
     }
 }
 

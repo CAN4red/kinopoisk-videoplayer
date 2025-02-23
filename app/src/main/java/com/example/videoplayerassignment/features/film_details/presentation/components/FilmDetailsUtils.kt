@@ -1,4 +1,4 @@
-package com.example.videoplayerassignment.features.film_details.presentation
+package com.example.videoplayerassignment.features.film_details.presentation.components
 
 import android.app.Activity
 import android.content.res.Configuration

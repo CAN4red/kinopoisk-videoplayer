@@ -14,7 +14,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.videoplayerassignment.core.presentation.screens.ErrorScreenContent
 import com.example.videoplayerassignment.core.presentation.screens.LoadingScreenContent
-import com.example.videoplayerassignment.features.film_details.presentation.components.FilmDetailsContent
+import com.example.videoplayerassignment.features.film_details.presentation.components.film_details.FilmDetailsContent
 
 @Composable
 fun FilmDetailsScreen(
